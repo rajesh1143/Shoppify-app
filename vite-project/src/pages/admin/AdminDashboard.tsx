@@ -1,4 +1,4 @@
-import Menu from "../../components/menu/Menu";
+import Layout from "../../components/Layout/Layout";
 import ProductsManagement from "./ProductsManagement";
 
 const AdminDashboard = () => {
@@ -25,16 +25,7 @@ const AdminDashboard = () => {
   //     setRows(tableRows);
   // }
   // console.log(rows,"rows")
-  return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-2">
-        <Menu />
-      </div>
-      <div className="col-span-10">
-        <ProductsManagement />
-      </div>
-    </div>
-  );
+  return <Layout children={<ProductsManagement />} moduleCode="PM" />;
 };
 
 export default AdminDashboard;

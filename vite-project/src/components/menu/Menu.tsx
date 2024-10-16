@@ -3,8 +3,13 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
 import { AiFillProduct } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { FC } from "react";
 
-const Menu = () => {
+interface IMenuProps {
+  moduleCode: string;
+}
+
+const Menu: FC<IMenuProps> = ({ moduleCode }) => {
   const navigate = useNavigate();
   return (
     <div className="">
@@ -29,15 +34,33 @@ const Menu = () => {
             <span className="ml-3 text-xl font-semibold">Logout</span>
           </div>
         </div>
-        {/* menuList */}
-        <div className="flex flex-col py-4">
-          <div className="flex items-center py-2 px-2 cursor-pointer hover:bg-gray-100">
-            <AiFillProduct size={24} />
-            <span className="text-xl font-semibold ml-2">
-              Products Management
-            </span>
+        <div
+          className="flex flex-col py-4"
+          style={{ minHeight: "500px",maxHeight:"600px", overflowY: "auto" }}
+        >
+          <div
+            className={`flex items-center py-2 px-2 cursor-pointer hover:bg-gray-100 ${
+              !moduleCode ? "justify-center" : ""
+            }`}
+          >
+            {moduleCode === "PM" ? (
+              <>
+                {" "}
+                <AiFillProduct size={24} />
+                <span className="text-xl font-semibold ml-2">
+                  Products Management
+                </span>
+              </>
+            ) : (
+              <div className="justify-center">
+                <p className="text-lg font-semibold text-center">?</p>
+              </div>
+            )}
           </div>
         </div>
+        {/* <div className="flex py-4 px-2" style={{flex:1}}>
+            <img src={LOGO_URL} className="h-10 w-10"/>
+          </div> */}
       </div>
     </div>
   );

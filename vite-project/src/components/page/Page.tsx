@@ -21,7 +21,7 @@ const Page: FC<IPageProps> = ({
       className="flex flex-col w-full h-full overflow-hidden"
       style={{ flex: 1 }}
     >
-      <div className="flex items-center justify-between px-4 py-4 shadow-lg">
+      <div className="flex items-center justify-between px-4 py-3 shadow-lg">
         <h1 className="text-xl font-semibold">{title}</h1>
         {action}
       </div>

@@ -48,7 +48,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
           (item) => item?.id !== data?.id
         );
         setCartItems(filteredItems);
-        toast.info('Item Removed Successfully!', {
+        toast.info("Item Removed Successfully!", {
           position: "bottom-right",
           autoClose: 1500,
           hideProgressBar: false,
@@ -58,27 +58,26 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
           progress: undefined,
           theme: "colored",
           transition: Flip,
-          });
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const updateCartItem = async (item:any) => {
+  const updateCartItem = async (item: any) => {
     // console.log(item, "uprod");
     try {
-      const response = await fetch(
-        `${BASE_API_URL}/carts/${item?.products[0]?.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(item),
-        }
-      );
+      const response = await fetch(`${BASE_API_URL}/carts/${item?.products[0]?.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item),
+      });
       const data = await response.json();
-      const filtered = cartItems?.filter((item) => item?.id !== data?.id);
-      setCartItems([...filtered,...data.products])
+      // const filtered = cartItems?.filter((item) => item?.id !== data?.id);
+      setCartItems((prev) =>
+        prev.map((eachItem) => (eachItem.id === data.id ? data?.products[0] : eachItem))
+      );
       // toast.success('Item added to the cart!', {
       //   position: "bottom-right",
       //   autoClose: 1500,
@@ -99,7 +98,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
     <CartContext.Provider
       value={{ cartItems, addToCart, removeFromCart, updateCartItem }}
     >
-      {children}
+      {children}  
     </CartContext.Provider>
   );
 };

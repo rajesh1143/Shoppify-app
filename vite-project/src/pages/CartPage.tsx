@@ -9,7 +9,7 @@ const CartPage = () => {
 
   return (
     <>
-      <Header />
+      <Header isAdmin={false} />
       <div className="flex flex-col md:flex-row p-4 space-y-4 md:space-y-0 md:space-x-6 mt-32 overflow-hidden">
         <div className="w-full h-full bg-white rounded-lg p-4">
           {cartItems?.length !== 0 && (

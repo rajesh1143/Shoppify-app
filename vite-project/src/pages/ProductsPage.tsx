@@ -4,7 +4,7 @@ import RenderProductItem from "../components/RenderProductItem";
 import Header from "../components/header/Header";
 import Search from "../components/search/Search";
 import { useProducts } from "../provider/ProductsProvider";
-import { ERROR_IMG } from "../common/constants/constants";
+// import { ERROR_IMG } from "../common/constants/constants";
 import Loader from "../components/Loader/Loader";
 import TitleCard from "../components/TitleCard/TitleCard";
 
@@ -54,7 +54,7 @@ const ProductsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasMore, loading]);
 
-  console.log("component-rendered");
+  // console.log("component-rendered");
 
   const onChange = (searchVal: string) => {
     setLoading(true);
@@ -64,7 +64,7 @@ const ProductsPage = () => {
     setProducts([]);
     setHasMore(false);
   };
-  console.log(products, "products");
+  
   return (
     <>
       <Header isAdmin={false} children={<Search onChange={onChange} />} />
