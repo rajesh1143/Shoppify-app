@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.loader {
+   border-color: #3490dc transparent transparent transparent;
+  }
+  
+.row-class{
+    border-bottom: 1px solid gray;
+}
+
+.rdg-cell {
+    padding-left: 1rem;
+    font-size: 1rem;
+    border-bottom: 1px solid rgb(227, 219, 219);
+    outline: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style:none;
+}
