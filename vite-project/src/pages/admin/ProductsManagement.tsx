@@ -7,7 +7,7 @@ import { useProducts } from "../../provider/ProductsProvider";
 import { columns, newProduct } from "../../common/constants/constants";
 import DataTable from "../../components/table/Table";
 import Page from "../../components/page/Page";
-
+import Button from "../../components/button/Button";
 
 const ProductsManagement = () => {
   // const [rowData,setRowData] = useState<ITrowsProps[]>([]);
@@ -16,7 +16,7 @@ const ProductsManagement = () => {
   const [selectedItem, setSelectedItem] = useState<IProductsType>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const { products } = useGetAllProducts();
-  const { products, removeProduct,setIsProductUpdated } = useProducts();
+  const { products, removeProduct, setIsProductUpdated } = useProducts();
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,7 +25,7 @@ const ProductsManagement = () => {
     }, 2000);
   }, []);
 
-  console.log(isEdit,"isedit")
+  console.log(isEdit, "isedit");
 
   const handleAddProduct = () => {
     setIsProductUpdated(false);
@@ -78,15 +78,12 @@ const ProductsManagement = () => {
         title="Products Management"
         isLoading={isLoading}
         action={
-          <div>
-            <button
-              type="button"
-              className="py-3 bg-blue-500 px-6 rounded-md text-white font-semibold hover:bg-blue-600"
-              onClick={handleAddProduct}
-            >
-              Add Product
-            </button>
-          </div>
+          <Button
+            className="py-3 bg-blue-500 px-6 rounded-md text-white font-semibold hover:bg-blue-600"
+            type="button"
+            label="Add Product"
+            onClick={handleAddProduct}
+          />
         }
         children={
           <div
@@ -102,7 +99,7 @@ const ProductsManagement = () => {
           </div>
         }
       />
-      
+
       {isEdit && (
         <EditModal
           product={isAdding ? newProduct : selectedItem}

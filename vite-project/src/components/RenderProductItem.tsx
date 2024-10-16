@@ -9,6 +9,7 @@ import EditModal from "./editModel/EditModel";
 import DropDown from "./dropdown/DropDown";
 import { productDropDownOption } from "../common/constants/constants";
 import Loader from "./Loader/Loader";
+import Button from "./button/Button";
 // import { useAddCart } from "../common/hooks/useAddCart";
 
 interface IProductItemProp {
@@ -153,19 +154,18 @@ const RenderProductItem: React.FC<IProductItemProp> = ({ item }) => {
             {item?.rating}
           </p>
         </div>
-        <div>
-          <button
-            className={`py-3 mb-2 w-full text-lg text-white font-semibold rounded-md shadow-lg hover:translate-y-[1px] ${
-              getLabel() === "Added to Cart" ? "bg-green-500" : "bg-blue-500"
-            }`}
-            // disabled={isDisabled}
-            onClick={() => handleAddCart(item?.id)}
-            // disabled={isModelOpen}
-          >
-            {getLabel()}
-          </button>
-          {/* <button onClick={() => handleDelete(item?.id)}>Delete</button> */}
-        </div>
+        <Button
+          children={
+            <button
+              className={`py-3 mb-2 w-full text-lg text-white font-semibold rounded-md shadow-lg hover:translate-y-[1px] ${
+                getLabel() === "Added to Cart" ? "bg-green-500" : "bg-blue-500"
+              }`}
+              onClick={() => handleAddCart(item?.id)}
+            >
+              {getLabel()}
+            </button>
+          }
+        />
       </div>
       {/* {isModelOpen && (
         <EditModal
