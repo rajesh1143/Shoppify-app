@@ -23,8 +23,8 @@ interface IHeaderProps {
 const Header: FC<IHeaderProps> = ({ children, isAdmin, style }) => {
   const [cartLength, setCartLength] = useState<number | undefined>(undefined);
   const [isProfileClicked, setIsProfileClicked] = useState<boolean>(false);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const { setIsProductUpdated } = useProducts();
+  // const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  // const { setIsProductUpdated } = useProducts();
   const { cartItems } = useCart();
   // const { addProduct } = useProducts();
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Header: FC<IHeaderProps> = ({ children, isAdmin, style }) => {
         className={`py-4 px-4 fixed top-0 w-full z-10 bg-white shadow-md ${
           isAdmin ? "left-100" : "left-0"
         }`}
-        // style={style}
+        style={style}
       >
         <nav className="flex justify-between items-center px-1">
           <div className="flex flex-col items-center cursor-pointer">

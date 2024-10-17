@@ -20,12 +20,12 @@ const Button: FC<IButtonProps> = ({
   style,
 }) => {
   return (
-    <div>
+    <div className="">
       {!children && (
         <button
           type={type}
           disabled={disabled}
-          className={`${className}`}
+          className={className}
           style={style}
           onClick={onClick}
         >

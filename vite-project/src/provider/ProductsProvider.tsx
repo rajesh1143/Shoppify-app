@@ -31,6 +31,7 @@ interface IProductsContextType {
   setProducts: (val: IProductsType[]) => void;
   setHasMore: (val: boolean) => void;
   isProductUpdated: boolean;
+  isUpdating:boolean;
   setIsProductUpdated: (val: boolean) => void;
   addProduct: (prod: any) => void;
   updateProduct: (val: number, prod: Record<string, any>) => void;
@@ -48,6 +49,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
   const [skip, setSkip] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
   const [isProductUpdated, setIsProductUpdated] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProducts = () => {
@@ -74,6 +76,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
   }, [limit, skip, search, page]);
 
   const addProduct = (newProduct: any) => {
+    setIsUpdating(true);
     setIsProductUpdated(false);
     setTimeout(async () => {
       try {
@@ -84,10 +87,8 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
         });
         const data = await response.json();
         setProducts((prev) => [data, ...prev]);
-      } catch (err) {
-        console.log(err);
-      } finally {
         setIsProductUpdated(true);
+        setIsUpdating(false);
         toast.success("Product Added Successfully!", {
           position: "bottom-right",
           autoClose: 1500,
@@ -99,6 +100,8 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
           theme: "colored",
           transition: Flip,
         });
+      } catch (err) {
+        console.log(err);
       }
     }, 1000);
   };
@@ -112,6 +115,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedProduct),
         });
+        if (!response.ok) throw new Error("Failed to fetch products");
         const updatedData = await response.json();
         // const filtered = products.filter((item) => item.id !== updatedData.id);
         // setProducts([updatedData, ...filtered]);
@@ -120,11 +124,50 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
             product.id === updatedData?.id ? updatedData : product
           )
         );
+        if (response.ok) {
+          setIsProductUpdated(true);
+          toast.success("Product Updated Successfully!", {
+            position: "bottom-right",
+            autoClose: 500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Flip,
+          });
+        }
       } catch (err) {
         console.log(err);
-      } finally {
+      }
+    }, 1500);
+  };
+
+  const removeProduct = async (id: number) => {
+    setIsProductUpdated(false);
+    try {
+      const response = await fetch(`${BASE_API_URL}/products/${id}`, {
+        method: "DELETE",
+      });
+      const deletedData = await response.json();
+
+      setProducts((prev) => prev.filter((item) => item.id !== deletedData.id));
+      if (deletedData?.isDeleted) {
+        toast.success("Product Deleted Successfully!", {
+          position: "bottom-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Flip,
+        });
         setIsProductUpdated(true);
-        toast.success("Product Updated Successfully!", {
+      }else{
+        toast.error("Error Deleting Product", {
           position: "bottom-right",
           autoClose: 1500,
           hideProgressBar: false,
@@ -136,39 +179,15 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
           transition: Flip,
         });
       }
-    }, 1500);
-  };
-
-  const removeProduct = async (id: number) => {
-    // setIsProductUpdated(false);
-    try {
-      const response = await fetch(`${BASE_API_URL}/products/${id}`, {
-        method: "DELETE",
-      });
-      const deletedData = await response.json();
-
-      setProducts((prev) => prev.filter((item) => item.id !== deletedData.id));
     } catch (err) {
       console.log(err);
-    } finally {
-      // setIsProductUpdated(true);
-      toast.success("Product Deleted Successfully!", {
-        position: "bottom-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Flip,
-      });
     }
   };
   return (
     <ProductsContext.Provider
       value={{
         isProductUpdated,
+        isUpdating,
         products,
         search,
         loading,

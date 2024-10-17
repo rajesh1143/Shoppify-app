@@ -12,8 +12,7 @@ interface IMenuProps {
 const Menu: FC<IMenuProps> = ({ moduleCode }) => {
   const navigate = useNavigate();
   return (
-    <div className="">
-      <div
+      <nav
         className="col-span-2 h-screen bg-white shadow-lg"
         style={{ zIndex: 10 }}
       >
@@ -61,8 +60,7 @@ const Menu: FC<IMenuProps> = ({ moduleCode }) => {
         {/* <div className="flex py-4 px-2" style={{flex:1}}>
             <img src={LOGO_URL} className="h-10 w-10"/>
           </div> */}
-      </div>
-    </div>
+      </nav>
   );
 };
 

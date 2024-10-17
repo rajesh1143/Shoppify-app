@@ -13,7 +13,7 @@ const ProductsManagement = () => {
   // const [rowData,setRowData] = useState<ITrowsProps[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<IProductsType>({});
+  const [selectedItem, setSelectedItem] = useState({} as IProductsType);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const { products } = useGetAllProducts();
   const { products, removeProduct, setIsProductUpdated } = useProducts();
@@ -37,7 +37,7 @@ const ProductsManagement = () => {
     setIsAdding(false);
     setIsProductUpdated(false);
     const getSelectedRow = products.find((item) => item.id === id);
-    setSelectedItem(getSelectedRow);
+    setSelectedItem(getSelectedRow as IProductsType);
     setIsEdit(true);
   };
 
@@ -56,18 +56,18 @@ const ProductsManagement = () => {
       rating: item?.rating,
       actions: (
         <div className="flex items-center gap-x-5">
-          <span
+          <button
             className="text-blue-500 cursor-pointer"
-            onClick={() => handleEdit(item?.id)}
+            onClick={() => handleEdit(item?.id as number)}
           >
             <FaEdit size={21} />
-          </span>
-          <span
+          </button>
+          <button
             className="text-red-500 cursor-pointer"
-            onClick={() => handleDelete(item.id)}
+            onClick={() => handleDelete(item.id as number)}
           >
             <FaTrashCan size={21} />
-          </span>
+          </button>
         </div>
       ),
     }));
@@ -103,6 +103,7 @@ const ProductsManagement = () => {
       {isEdit && (
         <EditModal
           product={isAdding ? newProduct : selectedItem}
+          isEditMode={isEdit}
           setIsEditMode={setIsEdit}
           isNew={isAdding}
         />

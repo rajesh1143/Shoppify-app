@@ -15,6 +15,7 @@ const Loader: FC<ILoaderProps> = ({
   isModel = false,
   overlay = false,
   blurBackground = false,
+  style
 }) => {
   return (
     <div
@@ -35,7 +36,7 @@ const Loader: FC<ILoaderProps> = ({
           </div>
         )}
         {showSpinner && (
-          <div className="loader animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+          <div className="loader animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" style={style}></div>
         )}
       </div>
     </div>

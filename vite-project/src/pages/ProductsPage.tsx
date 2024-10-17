@@ -28,7 +28,7 @@ const ProductsPage = () => {
     search,
     hasMore,
     loading,
-    page,
+    // page,
     limit,
     setPage,
     setLimit,
@@ -42,9 +42,9 @@ const ProductsPage = () => {
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 5 && hasMore && !loading) {
-      setPage((prev) => prev + 1);
+      setPage((prev: number) => prev + 1);
       setLimit(15);
-      setSkip((prev) => prev + limit);
+      setSkip((prev: number) => prev + limit);
     }
   };
 
@@ -64,7 +64,7 @@ const ProductsPage = () => {
     setProducts([]);
     setHasMore(false);
   };
-  
+
   return (
     <>
       <Header isAdmin={false} children={<Search onChange={onChange} />} />
@@ -83,13 +83,11 @@ const ProductsPage = () => {
             isSearch={search !== ""}
           />
         )}
-        <div className="flex flex-wrap grow gap-x-5 gap-y-5 p-4">
-          {products?.map((product, i) => (
-            <RenderProductItem key={i} item={product} />
-          ))}
+        <div className="grid grid-cols-4 gap-4 p-4">
+          <RenderProductItem  item={products} />
         </div>
+
         {loading && products.length === 0 && search !== "" && (
-          // <p className="text-lg font-bold my-4 text-center">Loading...</p>
           <Loader
             loaderText="Searching for your products... Hang tight!"
             showSpinner
@@ -97,7 +95,6 @@ const ProductsPage = () => {
         )}
 
         {loading && products.length === 0 && search === "" && (
-          // <p className="text-lg font-bold my-4 text-center">Loading...</p>
           <Loader
             loaderText="Hang tight! we are fetching best deals just for you..."
             showSpinner

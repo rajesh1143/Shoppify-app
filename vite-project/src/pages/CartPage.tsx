@@ -17,7 +17,7 @@ const CartPage = () => {
           )}
           <div className="flex flex-col gap-y-4 overflow-y-auto max-h-[calc(100vh-120px)]">
             {cartItems?.map((item) => (
-              <RenderCartItem cartItem={item} />
+              <RenderCartItem key={item?.id} cartItem={item} />
             ))}
             {cartItems.length === 0 && <EmptyCartView />}
           </div>

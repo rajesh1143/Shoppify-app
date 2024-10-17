@@ -9,6 +9,7 @@ import Loader from "../Loader/Loader";
 
 interface EditModalProps {
   isNew?: boolean;
+  isEditMode:boolean;
   product: IProductsType;
   setIsEditMode: (val: boolean) => void;
   // setIsDropdownOpen: (val: boolean) => void;
@@ -16,12 +17,16 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({
   isNew,
   product,
+  isEditMode,
   // onClose,
   setIsEditMode,
 }) => {
   const [updatedProduct, setUpdatedProduct] = useState<IProductsType>(product);
+  const [newData,setNewData] = useState([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const { updateProduct, addProduct, isProductUpdated } = useProducts();
+
+  console.log(product,"ss")
 
   useEffect(() => {
     if (isProductUpdated) {
@@ -60,7 +65,7 @@ const EditModal: React.FC<EditModalProps> = ({
     } else {
       const updatedData = getDiff(product, updatedProduct);
       setIsUpdating(true);
-      updateProduct(product?.id, updatedData);
+      updateProduct(product?.id as number, updatedData);
     }
   };
   const handleClose = () => {
@@ -89,7 +94,7 @@ const EditModal: React.FC<EditModalProps> = ({
         )}
         <div className="flex space-x-8">
           <div className="w-1/2">
-            <RenderProductItem item={updatedProduct} />
+            <RenderProductItem item={[updatedProduct]} isEditMode={isEditMode}/>
           </div>
           <div className="w-1/2">
             <h2 className="text-2xl font-bold mb-4">
