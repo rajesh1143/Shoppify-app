@@ -7,6 +7,7 @@ import { useProducts } from "../provider/ProductsProvider";
 // import { ERROR_IMG } from "../common/constants/constants";
 import Loader from "../components/Loader/Loader";
 import TitleCard from "../components/TitleCard/TitleCard";
+import { WishListProvider } from "../provider/WishListProvider";
 
 const ProductsPage = () => {
   // const [page, setPage] = useState<number>(1);
@@ -48,13 +49,23 @@ const ProductsPage = () => {
     }
   };
 
+  //   useEffect(() => {
+  //     if (!loading) {
+  //       setTimeout(()=>{
+  //  setLoading(true);
+  //       },500)
+  //     }
+  //   }, []);
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasMore, loading]);
 
-  // console.log("component-rendered");
+  console.log("component-rendered");
 
   const onChange = (searchVal: string) => {
     setLoading(true);
@@ -64,17 +75,10 @@ const ProductsPage = () => {
     setProducts([]);
     setHasMore(false);
   };
-
+  console.log(loading, "loaded");
   return (
     <>
       <Header isAdmin={false} children={<Search onChange={onChange} />} />
-      {!loading && (
-        <div className="py-4 px-4 fixed top-0 left-0 grow w-full z-11 bg-white mt-24">
-          <h1 className="font-bold text-md">
-            Showing: {products.length} products
-          </h1>
-        </div>
-      )}
       <div className="mt-16">
         {!loading && (
           <TitleCard
@@ -83,8 +87,19 @@ const ProductsPage = () => {
             isSearch={search !== ""}
           />
         )}
-        <div className="grid grid-cols-4 gap-4 p-4">
-          <RenderProductItem  item={products} />
+        {!loading && (
+          <div className="flex justify-between py-6 px-8 sticky left-0 grow w-full z-11 bg-white mt-24" style={{top:100}}>
+            <h1 className="font-bold text-md text-2xl">
+              {/* Showing: {products.length} products */}
+              Products List <span className="text-gray-400">({products.length})</span>
+            </h1>
+            <select>
+              <option>option</option>
+            </select>
+          </div>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-8">
+          <RenderProductItem item={products} />
         </div>
 
         {loading && products.length === 0 && search !== "" && (

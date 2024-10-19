@@ -11,21 +11,23 @@ import { useCart } from "../../common/hooks/useCart";
 import { CSSProperties, FC, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DropDown from "../dropdown/DropDown";
-import EditModal from "../editModel/EditModel";
-import { useProducts } from "../../provider/ProductsProvider";
+import { FaRegHeart } from "react-icons/fa";
+import { useWishList } from "../../common/hooks/useWishList";
 
 interface IHeaderProps {
   children?: ReactNode;
   isAdmin: boolean;
+  isWishList?: boolean;
   style?: CSSProperties;
 }
 
-const Header: FC<IHeaderProps> = ({ children, isAdmin, style }) => {
+const Header: FC<IHeaderProps> = ({ children, isAdmin, isWishList, style }) => {
   const [cartLength, setCartLength] = useState<number | undefined>(undefined);
   const [isProfileClicked, setIsProfileClicked] = useState<boolean>(false);
   // const [isEditMode, setIsEditMode] = useState<boolean>(false);
   // const { setIsProductUpdated } = useProducts();
   const { cartItems } = useCart();
+  const { wishList } = useWishList();
   // const { addProduct } = useProducts();
   const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const Header: FC<IHeaderProps> = ({ children, isAdmin, style }) => {
     // setIsProductUpdated(false);
     // setIsEditMode(true);
     // setIsProfileClicked(false);
-    navigate("/admin")
+    navigate("/admin");
   };
 
   return (
@@ -76,6 +78,19 @@ const Header: FC<IHeaderProps> = ({ children, isAdmin, style }) => {
           </div>
           <ul className="flex items-center gap-x-4">
             <li>{children}</li>
+            {!isWishList && (
+              <li
+                className="flex cursor-pointer text-red-500"
+                onClick={() => navigate("/my-wishlist")}
+              >
+                <FaRegHeart size={30} />
+                {wishList.length !== 0 && (
+                  <span className="flex justify-center items-center font-bold bg-blue-100 rounded-2xl p-1 h-6 w-6 text-center ml-[-5px] mt-[-5px]">
+                    {wishList.length}
+                  </span>
+                )}
+              </li>
+            )}
             <li className="flex cursor-pointer">
               <IoCart size={34} onClick={handleCartPageNavigation} />
               {cartLength && (

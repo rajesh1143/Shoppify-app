@@ -6,10 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { ProductsProvider } from "./provider/ProductsProvider";
 import LandingPage from "./pages/LandingPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import WishListPage from "./pages/WishListPage";
+import { WishListProvider } from "./provider/WishListProvider";
 
 function App() {
   return (
-    <>
+    <WishListProvider>
       <Router>
         <div className="flex flex-col">
           <Routes>
@@ -30,11 +32,12 @@ function App() {
               }
             />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/my-wishlist" element={<WishListPage />} />
           </Routes>
         </div>
       </Router>
       <ToastContainer />
-    </>
+    </WishListProvider>
   );
 }
 

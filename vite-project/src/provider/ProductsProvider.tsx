@@ -31,17 +31,21 @@ interface IProductsContextType {
   setProducts: (val: IProductsType[]) => void;
   setHasMore: (val: boolean) => void;
   isProductUpdated: boolean;
-  isUpdating:boolean;
+  isUpdating: boolean;
   setIsProductUpdated: (val: boolean) => void;
   addProduct: (prod: any) => void;
   updateProduct: (val: number, prod: Record<string, any>) => void;
   removeProduct: (id: number) => void;
+  getProducts: () => void;
+  allData: IProductsType[];
 }
 
 export const ProductsContext = createContext({} as IProductsContextType);
 
 export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<IProductsType[]>([]);
+  const [adminData, setAdminData] = useState<IProductsType[]>([]);
+  const [allData, setAllData] = useState<IProductsType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
@@ -65,6 +69,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
           const data = await response.json();
           if (search !== "") setProducts(data?.products);
           else setProducts((prev) => [...prev, ...data.products]);
+          // else setProducts([...data.products]);
           setHasMore(data.products.length === limit);
         } catch (error) {
           console.log(error);
@@ -74,6 +79,12 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
     };
     fetchProducts();
   }, [limit, skip, search, page]);
+
+  const getProducts = async () => {
+    const response = await fetch(`${BASE_API_URL}/products?limit=${0}`);
+    const data = await response.json();
+    setAllData(data.products);
+  };
 
   const addProduct = (newProduct: any) => {
     setIsUpdating(true);
@@ -87,6 +98,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
         });
         const data = await response.json();
         setProducts((prev) => [data, ...prev]);
+        setAllData((prev) => [data, ...prev]);
         setIsProductUpdated(true);
         setIsUpdating(false);
         toast.success("Product Added Successfully!", {
@@ -124,6 +136,11 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
             product.id === updatedData?.id ? updatedData : product
           )
         );
+        setAllData((prev) =>
+          prev?.map((product) =>
+            product.id === updatedData?.id ? updatedData : product
+          )
+        );
         if (response.ok) {
           setIsProductUpdated(true);
           toast.success("Product Updated Successfully!", {
@@ -141,7 +158,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
       } catch (err) {
         console.log(err);
       }
-    }, 1500);
+    }, 1000);
   };
 
   const removeProduct = async (id: number) => {
@@ -151,8 +168,8 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
         method: "DELETE",
       });
       const deletedData = await response.json();
-
       setProducts((prev) => prev.filter((item) => item.id !== deletedData.id));
+      setAllData((prev) => prev.filter((item) => item.id !== deletedData.id));
       if (deletedData?.isDeleted) {
         toast.success("Product Deleted Successfully!", {
           position: "bottom-right",
@@ -166,10 +183,10 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
           transition: Flip,
         });
         setIsProductUpdated(true);
-      }else{
+      } else {
         toast.error("Error Deleting Product", {
           position: "bottom-right",
-          autoClose: 1500,
+          autoClose: 500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -206,6 +223,8 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
         addProduct,
         updateProduct,
         removeProduct,
+        getProducts,
+        allData,
       }}
     >
       {children}

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IProductsType } from "../typings/typing";
 import { useCart } from "../common/hooks/useCart";
 import { IoIosStarHalf } from "react-icons/io";
 // import { useGetAllProducts } from "../common/hooks/useGetAllProducts";
 import Button from "./button/Button";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { useWishList } from "../common/hooks/useWishList";
 // import { useAddCart } from "../common/hooks/useAddCart";
 
 interface IProductItemProp {
@@ -16,7 +19,15 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
   isEditMode,
 }) => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const [isWishListed, setIsWishListed] = useState<boolean>(false);
   const { addToCart, cartItems, updateCartItem, isUpdating } = useCart();
+  const { wishList, addWishList, isInWishList,removeWishList } = useWishList();
+
+  // useEffect(()=>{
+  //   if(wishList.length !==0){
+  //     const findItem = wishList.find(())
+  //   }
+  // },[])
 
   const handleAddCart = (id: number) => {
     let user_id = 1;
@@ -46,6 +57,11 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
     }
   };
 
+  const handleWishList = (item) => {
+    // setSelectedItem(item.id);
+    if (isInWishList(item.id)) removeWishList(item.id);
+    else addWishList(item);
+  };
   // const getLabel = () => {
   //   const isItemExist = cartItems?.find(
   //     (cartItem) => cartItem?.id === item?.id
@@ -61,7 +77,22 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
     <>
       {item?.map((items) => (
         <>
-          <div key={items?.id} className="flex flex-col grow border rounded-lg shadow-lg p-4 relative">
+          <div
+            key={items?.id}
+            className="flex flex-col grow border rounded-lg shadow-lg p-4 relative"
+          >
+            <div className="top-4 right-4 absolute">
+              <span
+                className="text-red-400 cursor-pointer hover:translate-y-4"
+                onClick={() => handleWishList(items)}
+              >
+                {isInWishList(items.id as number) ? (
+                  <FaHeart size={18} />
+                ) : (
+                  <FaRegHeart size={18} />
+                )}
+              </span>
+            </div>
             <img
               src={items?.thumbnail}
               className="h-40 w-full object-contain"
@@ -91,7 +122,11 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
               children={
                 <button
                   key={items?.id}
-                  className={`py-3 mb-2 w-full text-lg text-white font-semibold rounded-md shadow-lg hover:translate-y-[1px] ${isUpdating && selectedItem === items.id ? "bg-blue-300" : "bg-blue-500"}`}
+                  className={`py-3 mb-2 w-full text-lg text-white font-semibold rounded-md shadow-lg hover:translate-y-[1px] ${
+                    isUpdating && selectedItem === items.id
+                      ? "bg-blue-300"
+                      : "bg-blue-500"
+                  }`}
                   disabled={
                     isEditMode || (isUpdating && selectedItem === items.id)
                   }

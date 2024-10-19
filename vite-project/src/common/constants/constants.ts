@@ -12,6 +12,8 @@ export const CAROUSEL_IMG_1 =
 export const CAROUSEL_IMG_2 =
   "https://img.freepik.com/premium-vector/happy-diwali-sale-banner-with-diya-oil-lamp-confetti-elements-pink-background-bokeh-effect_384372-393.jpg?size=626&ext=jpg";
 
+export const WISHLIST_IMG ="https://clipground.com/images/wishlist-png-5.png"
+
 export const productDropDownOption = [
   {
     text: "Delete",

@@ -74,7 +74,7 @@ const RenderCartItem: FC<ICartItemProps> = ({ cartItem }) => {
               onClick={() => handleDeleteCart(cartItem.id)}
             >
               <FaTrashCan size={14} className="text- text-gray-400" />
-              <p className="text-md text-gray-400 ml-2 hover:text-gray-500">
+              <p className="text-sm text-gray-400 ml-2 hover:text-gray-500">
                 Remove Item
               </p>
             </div>

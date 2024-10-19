@@ -138,6 +138,7 @@ const EditModal: React.FC<EditModalProps> = ({
                   name="price"
                   value={updatedProduct?.price}
                   onChange={handleInputChange}
+                  min={1}
                   className="w-full px-3 py-2 border rounded"
                 />
               </div>

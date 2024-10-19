@@ -16,7 +16,7 @@ const ProductsManagement = () => {
   const [selectedItem, setSelectedItem] = useState({} as IProductsType);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //   const { products } = useGetAllProducts();
-  const { products, removeProduct, setIsProductUpdated } = useProducts();
+  const { products, removeProduct, setIsProductUpdated,allData,getProducts} = useProducts();
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,7 +25,9 @@ const ProductsManagement = () => {
     }, 2000);
   }, []);
 
-  console.log(isEdit, "isedit");
+  useEffect(()=>{
+   getProducts();
+  },[])
 
   const handleAddProduct = () => {
     setIsProductUpdated(false);
@@ -36,7 +38,7 @@ const ProductsManagement = () => {
   const handleEdit = (id: number) => {
     setIsAdding(false);
     setIsProductUpdated(false);
-    const getSelectedRow = products.find((item) => item.id === id);
+    const getSelectedRow = allData.find((item) => item.id === id);
     setSelectedItem(getSelectedRow as IProductsType);
     setIsEdit(true);
   };
@@ -45,9 +47,11 @@ const ProductsManagement = () => {
     removeProduct(id);
   };
 
+  console.log(products, "products")
+
   const rows =
-    products?.length > 0 &&
-    products.map((item) => ({
+    allData?.length > 0 &&
+    allData.map((item) => ({
       id: item?.id,
       title: item?.title,
       description: item?.description,

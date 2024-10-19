@@ -35,7 +35,7 @@ const DropDown: FC<IDropDownProps> = ({
     >
       <li className="font-bold text-md">Actions</li>
       {options?.map((eachOption, i) => (
-        <li key={i} className="flex items-center justify-between text-lg font-semibold hover:text-gray-700">
+        <li key={i} className="flex items-center justify-between text-lg font-semibold hover:text-gray-700" onClick={handleAdminNav}>
           {eachOption?.text}
           <span>
             {/* {eachOption?.icon === "delete" && (
@@ -45,7 +45,7 @@ const DropDown: FC<IDropDownProps> = ({
               <FaEdit size={18} onClick={() => onEdit(item?.id)} />
             )} */}
             {eachOption?.icon === "admin" && (
-              <MdAdminPanelSettings size={18} onClick={handleAdminNav} />
+              <MdAdminPanelSettings size={18} />
             )}
           </span>
         </li>
