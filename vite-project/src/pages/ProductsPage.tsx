@@ -7,7 +7,6 @@ import { useProducts } from "../provider/ProductsProvider";
 // import { ERROR_IMG } from "../common/constants/constants";
 import Loader from "../components/Loader/Loader";
 import TitleCard from "../components/TitleCard/TitleCard";
-import { WishListProvider } from "../provider/WishListProvider";
 
 const ProductsPage = () => {
   // const [page, setPage] = useState<number>(1);
@@ -48,14 +47,6 @@ const ProductsPage = () => {
       setSkip((prev: number) => prev + limit);
     }
   };
-
-  //   useEffect(() => {
-  //     if (!loading) {
-  //       setTimeout(()=>{
-  //  setLoading(true);
-  //       },500)
-  //     }
-  //   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -120,7 +111,7 @@ const ProductsPage = () => {
           <div className="flex justify-center items-center">
             {/* <img src={ERROR_IMG} className="h-[400px] w-[450px]" /> */}
             <p className="text-lg font-bold my-4 text-center">
-              Something Gone Wrong,Failed to fetch
+              Something Gone Wrong, Failed to fetch
             </p>
           </div>
         )}

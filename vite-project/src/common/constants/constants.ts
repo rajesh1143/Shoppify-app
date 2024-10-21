@@ -89,7 +89,7 @@ export const newProduct = {
 };
 
 export const columns = [
-  { key: "id", name: "ID", width: "40px", resizable: true },
+  { key: "id", name: "ID", width: "60px", resizable: true },
   { key: "title", name: "Title", width: "240px", resizable: true },
   { key: "description", name: "Description", width: "240px", resizable: true },
   { key: "image", name: "Image", width: "140px", resizable: true },

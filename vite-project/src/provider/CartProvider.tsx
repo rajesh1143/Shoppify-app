@@ -1,17 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, FC, ReactNode, useState } from "react";
 import { BASE_API_URL } from "../common/service/service";
-import { ICartItemType } from "../typings/typing";
+import { ICartItemType, ICartProviderType } from "../typings/typing";
 import { Flip, toast } from "react-toastify";
 
-interface ICartProviderType {
-  cartItems: ICartItemType[];
-  setCartItems:(val:ICartItemType[])=>void;
-  addToCart: (product: any) => void;
-  removeFromCart: (id: number) => void;
-  updateCartItem: (item: any) => void;
-  isUpdating: boolean;
-}
 
 interface CartProviderProps {
   children: ReactNode;

@@ -1,16 +1,8 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { IProductsType } from "../typings/typing";
+import { createContext, ReactNode, useState } from "react";
+import { IProductsType, IWishListContextType } from "../typings/typing";
 
 interface IWishListProviderProps {
   children: ReactNode;
-}
-
-interface IWishListContextType {
-  wishList: IProductsType[];
-  setWishList: (val: []) => void;
-  addWishList: (val: IProductsType) => void;
-  removeWishList: (val: number) => void;
-  isInWishList: (val: number) => boolean;
 }
 
 export const WishListContext = createContext({} as IWishListContextType);

@@ -7,39 +7,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { IProductsType } from "../typings/typing";
+import { IProductsContextType, IProductsType } from "../typings/typing";
 import { BASE_API_URL } from "../common/service/service";
 import { Flip, toast } from "react-toastify";
 
 interface IProductsProviderProps {
   children: ReactNode;
 }
-
-interface IProductsContextType {
-  products: IProductsType[];
-  search: string;
-  loading: boolean;
-  hasMore: boolean;
-  page: number;
-  setPage: (val: number) => void;
-  limit: number;
-  setLimit: (val: number) => void;
-  skip: number;
-  setSkip: (val: number) => void;
-  setSearch: (val: string) => void;
-  setLoading: (val: boolean) => void;
-  setProducts: (val: IProductsType[]) => void;
-  setHasMore: (val: boolean) => void;
-  isProductUpdated: boolean;
-  isUpdating: boolean;
-  setIsProductUpdated: (val: boolean) => void;
-  addProduct: (prod: any) => void;
-  updateProduct: (val: number, prod: Record<string, any>) => void;
-  removeProduct: (id: number) => void;
-  getProducts: () => void;
-  allData: IProductsType[];
-}
-
 export const ProductsContext = createContext({} as IProductsContextType);
 
 export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
@@ -83,7 +57,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
   const getProducts = async () => {
     const response = await fetch(`${BASE_API_URL}/products?limit=${0}`);
     const data = await response.json();
-    setAllData(data.products);
+    setAllData(data?.products);
   };
 
   const addProduct = (newProduct: any) => {
