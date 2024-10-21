@@ -8,6 +8,7 @@ import LandingPage from "./pages/LandingPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import WishListPage from "./pages/WishListPage";
 import { WishListProvider } from "./provider/WishListProvider";
+import ProductsDetailPage from "./pages/ProductsDetailPage";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
             />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/my-wishlist" element={<WishListPage />} />
+            <Route
+              path="/products-detail/:id"
+              element={
+                <ProductsProvider>
+                  <ProductsDetailPage />
+                </ProductsProvider>
+              }
+            />
           </Routes>
         </div>
       </Router>

@@ -12,7 +12,7 @@ export const CAROUSEL_IMG_1 =
 export const CAROUSEL_IMG_2 =
   "https://img.freepik.com/premium-vector/happy-diwali-sale-banner-with-diya-oil-lamp-confetti-elements-pink-background-bokeh-effect_384372-393.jpg?size=626&ext=jpg";
 
-export const WISHLIST_IMG ="https://clipground.com/images/wishlist-png-5.png"
+export const WISHLIST_IMG = "https://clipground.com/images/wishlist-png-5.png";
 
 export const productDropDownOption = [
   {
@@ -33,7 +33,7 @@ export const profileDropDownOption = [
 ];
 
 export const newProduct = {
-  id:undefined,
+  id: undefined,
   title: "Add Your Product Title",
   description: "Add your product description here..",
   category: "beauty",
@@ -90,10 +90,17 @@ export const newProduct = {
 
 export const columns = [
   { key: "id", name: "ID", width: "40px", resizable: true },
-  { key: "title", name: "Title",width: "240px", resizable: true },
-  { key: "description", name: "Description",width: "240px", resizable: true },
-  { key: "image", name: "Image",width: "140px", resizable: true },
-  { key: "price", name: "Price",width: "140px", resizable: true },
-  { key: "rating", name: "Rating",width: "140px", resizable: true },
-  { key: "actions", name: "Actions",width:"140px", resizable: true },
+  { key: "title", name: "Title", width: "240px", resizable: true },
+  { key: "description", name: "Description", width: "240px", resizable: true },
+  { key: "image", name: "Image", width: "140px", resizable: true },
+  { key: "price", name: "Price", width: "140px", resizable: true },
+  { key: "rating", name: "Rating", width: "140px", resizable: true },
+  { key: "actions", name: "Actions", width: "140px", resizable: true },
+];
+
+export const productDetail = [
+  { name: "Category", value: "category" },
+  { name: "SKU", value: "sku" },
+  { name: "Weight", value: "returnPolicy" },
+  { name: "Warranty Information", value: "warrantyInformation" },
 ];

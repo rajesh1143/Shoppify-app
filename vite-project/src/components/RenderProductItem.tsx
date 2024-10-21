@@ -7,6 +7,7 @@ import Button from "./button/Button";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { useWishList } from "../common/hooks/useWishList";
+import { useNavigate } from "react-router-dom";
 // import { useAddCart } from "../common/hooks/useAddCart";
 
 interface IProductItemProp {
@@ -21,7 +22,8 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const [isWishListed, setIsWishListed] = useState<boolean>(false);
   const { addToCart, cartItems, updateCartItem, isUpdating } = useCart();
-  const { wishList, addWishList, isInWishList,removeWishList } = useWishList();
+  const { wishList, addWishList, isInWishList, removeWishList } = useWishList();
+  const navigate = useNavigate();
 
   // useEffect(()=>{
   //   if(wishList.length !==0){
@@ -73,6 +75,9 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
   //   }
   // };
   // console.log(item);
+  const handleDetailView = (id: number) => {
+    navigate(`/products-detail/${id}`);
+  };
   return (
     <>
       {item?.map((items) => (
@@ -81,7 +86,7 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
             key={items?.id}
             className="flex flex-col grow border rounded-lg shadow-lg p-4 relative"
           >
-            <div className="top-4 right-4 absolute">
+            {!isEditMode && <div className="top-4 right-4 absolute">
               <span
                 className="text-red-400 cursor-pointer hover:translate-y-4"
                 onClick={() => handleWishList(items)}
@@ -92,12 +97,17 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
                   <FaRegHeart size={18} />
                 )}
               </span>
-            </div>
+            </div>}
             <img
               src={items?.thumbnail}
-              className="h-40 w-full object-contain"
+              className="h-40 w-full cursor-pointer  object-contain"
+              onClick={() => {
+                if(!isEditMode) handleDetailView(items.id as number)
+              }}
             />
-            <div className="grow">
+            <div className="grow cursor-pointer" onClick={() => {
+              if(!isEditMode) handleDetailView(items.id as number)
+            }}>
               <h1 className="text-xl font-bold mb-2">{items?.title}</h1>
               <p className="text-base text-gray-400 mb-2">
                 {items?.description}
@@ -117,7 +127,7 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
                 {items?.rating}
               </p>
             </div>
-            <Button
+           {!isEditMode && <Button
               key={items?.id}
               children={
                 <button
@@ -128,7 +138,7 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
                       : "bg-blue-500"
                   }`}
                   disabled={
-                    isEditMode || (isUpdating && selectedItem === items.id)
+                    (isUpdating && selectedItem === items.id)
                   }
                   onClick={() => {
                     handleAddCart(items?.id as number);
@@ -139,7 +149,7 @@ const RenderProductItem: React.FC<IProductItemProp> = ({
                     : "Add to Cart"}
                 </button>
               }
-            />
+            />}
           </div>
         </>
       ))}

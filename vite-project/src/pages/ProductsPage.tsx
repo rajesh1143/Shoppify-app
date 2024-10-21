@@ -93,9 +93,9 @@ const ProductsPage = () => {
               {/* Showing: {products.length} products */}
               Products List <span className="text-gray-400">({products.length})</span>
             </h1>
-            <select>
+            {/* <select>
               <option>option</option>
-            </select>
+            </select> */}
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-8">

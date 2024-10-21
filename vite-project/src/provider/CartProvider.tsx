@@ -6,6 +6,7 @@ import { Flip, toast } from "react-toastify";
 
 interface ICartProviderType {
   cartItems: ICartItemType[];
+  setCartItems:(val:ICartItemType[])=>void;
   addToCart: (product: any) => void;
   removeFromCart: (id: number) => void;
   updateCartItem: (item: any) => void;
@@ -105,13 +106,14 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
       } catch (err) {
         console.log(err);
       }
-    }, 500);
+    }, 100);
   };
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        setCartItems,
         addToCart,
         removeFromCart,
         updateCartItem,

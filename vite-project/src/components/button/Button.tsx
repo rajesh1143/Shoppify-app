@@ -3,6 +3,7 @@ import { CSSProperties, FC, ReactNode } from "react";
 interface IButtonProps {
   label?: string;
   type?: "button" | "reset" | "submit" | undefined;
+  icon?: ReactNode;
   children?: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
@@ -13,6 +14,7 @@ interface IButtonProps {
 const Button: FC<IButtonProps> = ({
   label,
   type,
+  icon,
   children,
   disabled,
   onClick,
@@ -29,7 +31,7 @@ const Button: FC<IButtonProps> = ({
           style={style}
           onClick={onClick}
         >
-          {label}
+          {icon} {label}
         </button>
       )}
       {children && children}

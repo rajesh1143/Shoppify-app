@@ -93,7 +93,7 @@ const EditModal: React.FC<EditModalProps> = ({
           />
         )}
         <div className="flex space-x-8">
-          <div className="w-1/2">
+          <div className="flex w-1/2">
             <RenderProductItem item={[updatedProduct]} isEditMode={isEditMode}/>
           </div>
           <div className="w-1/2">

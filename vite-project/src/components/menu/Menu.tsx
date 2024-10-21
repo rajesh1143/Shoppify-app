@@ -30,7 +30,7 @@ const Menu: FC<IMenuProps> = ({ moduleCode }) => {
             onClick={() => navigate("/")}
           >
             <LuLogOut size={23} />
-            <span className="ml-3 text-xl font-semibold">Logout</span>
+            <span className="ml-3 text-xl font-semibold">Return to shopping</span>
           </div>
         </div>
         <div

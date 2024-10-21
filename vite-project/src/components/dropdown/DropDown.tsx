@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CSSProperties, FC } from "react";
+import { CSSProperties, FC, useEffect, useRef, useState } from "react";
 import { MdAdminPanelSettings } from "react-icons/md";
 
 interface IDropDownProps {
@@ -21,6 +21,23 @@ const DropDown: FC<IDropDownProps> = ({
   // onEdit,
   // onDelete,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropDownRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleOutSideClick = (event: MouseEvent) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(event.target as Node)
+      )
+        setIsOpen(false);
+    };
+    document.addEventListener("mousedown", handleOutSideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, []);
 
   const handleAdminNav = () => {
     isAdmin();
@@ -30,12 +47,17 @@ const DropDown: FC<IDropDownProps> = ({
   // }
   return (
     <ul
+      ref={dropDownRef}
       className="flex flex-col gap-y-2 text-gray-500 min-h-32 w-44 bg-gray-100 rounded-md px-4 py-3 shadow-md absolute cursor-pointer"
       style={style}
     >
       <li className="font-bold text-md">Actions</li>
       {options?.map((eachOption, i) => (
-        <li key={i} className="flex items-center justify-between text-lg font-semibold hover:text-gray-700" onClick={handleAdminNav}>
+        <li
+          key={i}
+          className="flex items-center justify-between text-lg font-semibold hover:text-gray-700"
+          onClick={handleAdminNav}
+        >
           {eachOption?.text}
           <span>
             {/* {eachOption?.icon === "delete" && (
@@ -44,9 +66,7 @@ const DropDown: FC<IDropDownProps> = ({
             {eachOption?.icon === "edit" && (
               <FaEdit size={18} onClick={() => onEdit(item?.id)} />
             )} */}
-            {eachOption?.icon === "admin" && (
-              <MdAdminPanelSettings size={18} />
-            )}
+            {eachOption?.icon === "admin" && <MdAdminPanelSettings size={18} />}
           </span>
         </li>
       ))}

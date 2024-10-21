@@ -44,7 +44,7 @@ export const ProductsContext = createContext({} as IProductsContextType);
 
 export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<IProductsType[]>([]);
-  const [adminData, setAdminData] = useState<IProductsType[]>([]);
+  // const [adminData, setAdminData] = useState<IProductsType[]>([]);
   const [allData, setAllData] = useState<IProductsType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(false);
@@ -173,7 +173,7 @@ export const ProductsProvider: FC<IProductsProviderProps> = ({ children }) => {
       if (deletedData?.isDeleted) {
         toast.success("Product Deleted Successfully!", {
           position: "bottom-right",
-          autoClose: 1500,
+          autoClose: 500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
